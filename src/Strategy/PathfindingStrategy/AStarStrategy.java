@@ -25,10 +25,11 @@ public class AStarStrategy extends PathfindingStrategy
     public static enum Heuristic
     {
         Pythagoras,
+        Eudclidean,
         Manhattan,
         Chebyshev,
         Octile,
-        Eudclidean
+       
     }
     
     

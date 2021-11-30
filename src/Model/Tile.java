@@ -25,7 +25,7 @@ public class Tile extends Observable
         VISITED_LIGHT,
         VISITED_MEDIUM,
         VISITED_DENSE,
-       VISITED_MAX
+        VISITED_MAX
     }
 
     private final Map<Type, Color> typeMap;
@@ -86,8 +86,7 @@ public class Tile extends Observable
         
         pane.getChildren().add(rectangle);
         pane.setTranslateX(x * size);
-        pane.setTranslateY(y * size);
-        
+        pane.setTranslateY(y * size);    
         updateTooltip(null);
         setEvents();
     }

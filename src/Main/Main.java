@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
-    private final String APP_TITLE = "NHẬP MÔN TRÍ TUỆ NHÂN TẠO";
+    private final String APP_TITLE = "Giải mê cung - trí tuệ nhân tạo";
     
     public static void main(String[] args)
     {

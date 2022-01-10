@@ -16,9 +16,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
@@ -33,65 +36,65 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 public class View implements Observer
 {
-    private final int WIDTH = 1200;
-    private final int HEIGHT = 660;
+    private final int WIDTH = 960;
+    private final int HEIGHT= 720;
+    private final TextField txtXTiles;//X
+    private final TextField txtYTiles;//Y
+//    private final TextField txtTileSize;//Kích thước
     
-    private final TextField txtXTiles;
-    private final TextField txtYTiles;
-    private final TextField txtTileSize;
-    private final Separator separatorStats;
-    private final Separator separatorAlgo;
-    private final Text txtStatsTitle;
-    private final Text txtStatsTitleValue;
-    private final Text txtStatsTilesTotal;
-    private final Text txtStatsTilesTotalValue;
-    private final Text txtStatsTilesVisited;
-    private final Text txtStatsTilesVisitedValue;
-    private final Text txtStatsPathFound;
-    private final Text txtStatsPathFoundValue;
-    private final Text txtStatsPathCost;
-    private final Text txtStatsPathCostValue;
-    private final Text txtStatsWallAmount;
-    private final Text txtStatsWallAmountValue;
-    private final Text txtStatsElapsedTime;
-    private final Text txtStatsElapsedTimeValue;
-    private final Text txtAlgorithms;
-    private final Text txtAlgorithmsHeuristic;
-    private final Text txtMaze;
-    private final Button btnRun;
-    private final Button btnClear;
-    private final Button btnExit;
-    private final Button btnMaze;
-    private final Button btnCreateGrid;
-    private final ComboBox cbAlgorithmBox;
-    private final ComboBox cbHeuristicBox;
-    private final ComboBox cbNodeBox;
+    private final Separator separatorStats;//Cách ô thống kê
+    private final Separator separatorAlgo;//Cách ô thuật toán
     
+    private final Text txtStatsTitle;//Thống kê
+
+//  
+    private final Text txtStatsTilesTotal;//tổng ô
+    private final Text txtStatsTilesTotalValue;//giá trị tổng ô
+    private final Text txtStatsTilesVisited;//số ô đã thăm
+    private final Text txtStatsTilesVisitedValue;//giá trị ô đã thăm
+    private final Text txtStatsPathFound;//Tìm được đường đi
+    private final Text txtStatsPathFoundValue;//Có/Không
+    private final Text txtStatsPathCost;//Chi phí
+    private final Text txtStatsPathCostValue;//Giá trị chi phí
+    private final Text txtStatsWallAmount;//Số tường
+    private final Text txtStatsWallAmountValue;//Giá trị
+    private final Text txtStatsElapsedTime;//Thời gian chạy
+    private final Text txtStatsElapsedTimeValue;//Giá trị thời gian
+    
+    private final Text txtAlgorithms;//Thuật toán
+    private final Text txtAlgorithmsHeuristic;//hàm heuristics
+    private final Text txtMaze;//Ma trận
+    private final Button btnRun;//Chạy
+    private final Button btnClear;//Xoá
+    private final Button btnExit;//Thoát
+    private final Button btnMaze;//Tạo ma trận
+    private final Button btnCreateGrid;//Tạo kích thước ma trận
+    private final Button btnAddWalls;//Tạo tường ngẫu nhiên
+    private final ComboBox cbAlgorithmBox;//Thuật toán
+//    private final Button btnAlgorithm;
+    private final ComboBox cbHeuristicBox;//Hàm heuristics
+    private final ComboBox cbNodeBox;//Loại ô
     // Grid
-    private final VBox leftPane;
+    private final VBox leftPane;//VBox ở bên trái
     private final Pane parentGridPane;
     private Pane gridPane;
-    
-    private final Grid model;
+    private final Grid model;//tạo ma trận ô
     private final Scene scene;
     
     private final int padding = 2;
-    private final String defaultXSize = "51";
-    private final String defaultYSize = "31";
-    private final String defaultTileSize = "20";
-    private final double leftPanelSize = 0.20;
-    private final Font defaultFont = Font.font("Courier New", 14);
-    private final String defaultHboxStyle = "-fx-padding: 10;" 
-        + "-fx-border-style: solid inside;"
-        + "-fx-border-width: 2;" + "-fx-border-insets: " + padding + ";"
-        + "-fx-border-radius: 4;" + "-fx-border-color: lightgray;";
+    private final String defaultXSize = "39";
+    private final String defaultYSize = "39";
+//    private final String defaultTileSize = "20";
+//    private final double leftPanelSize = 0.25;
+    private final Font defaultFont = Font.font("Verdana", FontWeight.EXTRA_BOLD, 12);
+    private final String defaultHboxStyle = "-fx-padding: 10;" ;
+  
     
     public View(Grid model)
     {
         this.model = model;
         this.parentGridPane = new Pane();
         this.gridPane = null;
-        
         this.leftPane = new VBox();
         this.leftPane.setPadding(new Insets(padding, padding, padding, padding));
         this.leftPane.setSpacing(10);
@@ -107,17 +110,17 @@ public class View implements Observer
         createPane.add(new Text("Y: "), 2, 0);
         txtYTiles = new TextField(defaultYSize);
         createPane.add(txtYTiles, 3, 0);
-        createPane.add(new Text("KÍCH THƯỚC: "), 4, 0);
-        txtTileSize = new TextField(defaultTileSize); 
-        createPane.add(txtTileSize, 5, 0);
+//        createPane.add(new Text("KÍCH THƯỚC: "), 4, 0);
+//        txtTileSize = new TextField(defaultTileSize); 
+//        createPane.add(txtTileSize, 5, 0);
         HBox hboxCreateBtn = new HBox(padding);
         hboxCreateBtn.setAlignment(Pos.CENTER);
-        btnCreateGrid = new Button("TẠO KÍCH THƯỚC MA TRẬN");
+        btnCreateGrid = new Button("TẠO MA TRẬN");
 //        btnCreateGrid.setTooltip(new Tooltip("Overrides previous grid"));
-        hboxCreateBtn.getChildren().addAll(btnCreateGrid);
-        HBox hboxShowCoords = new HBox(padding);
-        hboxShowCoords.setAlignment(Pos.CENTER);
-        vboxCreateGrid.getChildren().addAll(createPane, hboxCreateBtn, hboxShowCoords);
+        hboxCreateBtn.getChildren().add(btnCreateGrid);
+//        HBox hboxShowCoords = new HBox(padding);
+//        hboxShowCoords.setAlignment(Pos.CENTER);
+        vboxCreateGrid.getChildren().addAll(createPane, hboxCreateBtn);
         
         HBox hboxNodeBox = new HBox(padding);
         hboxNodeBox.setAlignment(Pos.CENTER);
@@ -148,12 +151,15 @@ public class View implements Observer
         txtAlgorithmsHeuristic.setFont(defaultFont);
         hboxAlgorithmTxt.getChildren().addAll(txtAlgorithms, separatorAlgo, txtAlgorithmsHeuristic);
         HBox hboxcbAlgorithmBox = new HBox(padding);
-        hboxcbAlgorithmBox.setAlignment(Pos.CENTER);
+        hboxcbAlgorithmBox.setAlignment(Pos.BASELINE_CENTER);
         cbAlgorithmBox = new ComboBox(FXCollections.observableArrayList(PathfindingStrategy.Algorithms.values()));
+//        cbAlgorithmBox.getItems().remove(PathfindingStrategy.Algorithms.Dijkstra);
         cbAlgorithmBox.getSelectionModel().selectFirst();
+        
 //        cbAlgorithmBox.setTooltip(new Tooltip("Algorithm picker"));
         cbHeuristicBox = new ComboBox(FXCollections.observableArrayList(AStarStrategy.Heuristic.values()));
         cbHeuristicBox.getSelectionModel().selectFirst();
+    
 //        cbHeuristicBox.setTooltip(new Tooltip("Heuristic for A* algorithm"));
         cbHeuristicBox.setDisable(true);
         hboxcbAlgorithmBox.getChildren().addAll(cbAlgorithmBox, cbHeuristicBox);
@@ -184,17 +190,28 @@ public class View implements Observer
         btnRun = new Button("CHẠY");
 //        btnRun.setTooltip(new Tooltip("Run Pathfinding Algorithm"));
         hboxUtilBtns.getChildren().addAll(btnRun, btnClear, btnExit);
-        
+        VBox vboxObstacles = new VBox(padding);
+        vboxObstacles.setStyle(defaultHboxStyle);
+        HBox hboxObstacles = new HBox(padding);
+        hboxObstacles.setAlignment(Pos.CENTER);
+        Text txtObstacles = new Text("Thêm tường ngẫu nhiên");
+        txtObstacles.setFont(defaultFont);
+        hboxObstacles.getChildren().add(txtObstacles);
+        HBox hboxAddWalls = new HBox(padding);
+        hboxAddWalls.setAlignment(Pos.CENTER);       
+         btnAddWalls = new Button("WALLS");
+        hboxAddWalls.getChildren().add(btnAddWalls);
+        vboxObstacles.getChildren().addAll(hboxObstacles, hboxAddWalls);
         separatorStats = new Separator();
         VBox vboxStats = new VBox(padding);
         vboxStats.setAlignment(Pos.CENTER_LEFT);
         vboxStats.setStyle(defaultHboxStyle);
         HBox hboxStatsTitle = new HBox(padding);
         hboxStatsTitle.setAlignment(Pos.CENTER);
-        txtStatsTitle = new Text("THÔNG KÊ");
-        txtStatsTitle.setFont(Font.font(defaultFont.getName(), FontWeight.BOLD, 20));
-        txtStatsTitleValue = new Text("");
-        hboxStatsTitle.getChildren().addAll(txtStatsTitle, txtStatsTitleValue);
+        txtStatsTitle = new Text("THỐNG KÊ");
+        txtStatsTitle.setFont(defaultFont);
+//        txtStatsTitleValue = new Text("");
+        hboxStatsTitle.getChildren().addAll(txtStatsTitle);
         HBox hboxStatsWalls = new HBox(padding);
         txtStatsWallAmount = new Text("SỐ TƯỜNG: ");
         txtStatsWallAmountValue = new Text("");
@@ -219,10 +236,11 @@ public class View implements Observer
         txtStatsElapsedTime = new Text("THỜI GIAN CHẠY:");
         txtStatsElapsedTimeValue = new Text("");
         hboxStatsElapsedTime.getChildren().addAll(txtStatsElapsedTime, txtStatsElapsedTimeValue);
-        vboxStats.getChildren().addAll(hboxStatsTitle, separatorStats, hboxStatsTotal, hboxStatsWalls, hboxStatsTilesVisited, hboxStatsPathFound, hboxStatsPathCost, hboxStatsElapsedTime);
-        
-        leftPane.getChildren().addAll(vboxCreateGrid, hboxNodeBox, vboxAlgorithmBox, vboxMaze, vboxStats, hboxUtilBtns);
-        
+        vboxStats.getChildren().addAll(hboxStatsTitle, separatorStats, hboxStatsTotal, hboxStatsWalls, hboxStatsTilesVisited, hboxStatsPathFound, hboxStatsPathCost, hboxStatsElapsedTime);      
+        leftPane.getChildren().addAll(vboxCreateGrid, hboxNodeBox, vboxAlgorithmBox, vboxMaze, vboxStats, hboxUtilBtns,vboxObstacles);
+        leftPane.setMaxSize(WIDTH, HEIGHT);
+        leftPane.setPrefSize(WIDTH/4, HEIGHT);
+        leftPane.setMinSize(0, 0);
         this.scene = new Scene(initComponents(), WIDTH, HEIGHT);
     }
     
@@ -237,12 +255,10 @@ public class View implements Observer
             });
         });
         
-        // Locks heuristic if algorithm is not A*
         cbAlgorithmBox.setOnAction((event) ->
         {
             cbHeuristicBox.setDisable(!(cbAlgorithmBox.getSelectionModel().getSelectedItem().toString().contains("AStar")));
         });
-        
         // Clear button clears the grid
         btnClear.setOnAction((event) ->
         {
@@ -259,10 +275,14 @@ public class View implements Observer
         // Generates a random maze
         btnMaze.setOnAction((event) ->
         {
+//      	controller.doToggleTileBorder(false);
 	        if(gridPane != null)
 	            controller.doGenerateMaze();
         });
-        
+        btnAddWalls.setOnAction((event) -> 
+        {
+            controller.doAddRandomWalls();
+        });
         // Initialized the grid
         btnCreateGrid.setOnAction((event) ->
         {
@@ -271,13 +291,14 @@ public class View implements Observer
             x = (x % 2 == 0) ? x - 1 : x; 
             int y = Integer.valueOf(txtYTiles.getText());
             y = (y % 2 == 0) ? y - 1 : y;
-            int size = Integer.valueOf(txtTileSize.getText());
-            
-            if(parentGridPane.getChildren().contains(gridPane))
+//            int size = Integer.valueOf(txtTileSize.getText());  
+            int sizex= HEIGHT/x;
+            int sizey= (int)(WIDTH*0.75/y);
+            if(parentGridPane.getChildren().contains(gridPane)) {
                 parentGridPane.getChildren().remove(gridPane);
-            
+            }
             // Initializes the grid
-            model.gridInit(x, y, size);
+            model.gridInit(x, y, sizex,sizey);
             this.fillGrid(model.getGrid());
         });
         
@@ -309,6 +330,11 @@ public class View implements Observer
                 try 
                 {
                     success = controller.doShortestPathAlgorithm(algorithm, heuristic);
+                    if(!success) {
+                    	Alert errorAlert = new Alert(AlertType.ERROR);
+                    	errorAlert.setHeaderText("Bạn chưa chọn điểm bắt đầu hoặc xuất phát");
+                    	errorAlert.showAndWait();
+                    }
                 } 
                 catch (InterruptedException ex) 
                 {
@@ -317,7 +343,7 @@ public class View implements Observer
             }
         });
     }
-    
+ 
     public Scene getScene()
     {
         return this.scene;
@@ -330,16 +356,14 @@ public class View implements Observer
     
     private SplitPane initComponents()
     {
-        VBox root = new VBox();
-        
-        root.getChildren().add(this.parentGridPane);
-        
+        VBox root = new VBox();        
+        root.getChildren().add(this.parentGridPane); 
+        root.setPrefSize(3*WIDTH/4, HEIGHT);
         SplitPane splitPane = new SplitPane();
-        splitPane.getItems().addAll(this.leftPane, root);
-        
-        this.leftPane.maxWidthProperty().bind(splitPane.widthProperty().multiply(this.leftPanelSize));
-        this.leftPane.minWidthProperty().bind(splitPane.widthProperty().multiply(this.leftPanelSize));
-        
+        splitPane.getItems().addAll(root,this.leftPane);   
+        splitPane.setDividerPositions(0.75f);
+//        this.leftPane.maxWidthProperty().bind(splitPane.widthProperty().multiply(this.leftPanelSize));
+//        this.leftPane.minWidthProperty().bind(splitPane.widthProperty().multiply(this.leftPanelSize));        
         return splitPane;
     }
     private void fillGrid(Tile[][] tiles)
@@ -361,8 +385,7 @@ public class View implements Observer
         {
             if(arg instanceof PathfindingStatistics)
             {
-                PathfindingStatistics stats = (PathfindingStatistics)arg;
-                
+                PathfindingStatistics stats = (PathfindingStatistics)arg;              
                 this.txtStatsTilesTotalValue.setText(String.valueOf(stats.getTilesTotal()));
                 this.txtStatsWallAmountValue.setText(String.valueOf(stats.getWallSize()));
                 this.txtStatsTilesVisitedValue.setText(String.valueOf(stats.getTilesVisited()));

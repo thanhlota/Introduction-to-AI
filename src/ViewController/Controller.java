@@ -1,5 +1,4 @@
 package ViewController;
-
 import Model.Grid;
 import Model.Tile;
 import Strategy.PathfindingStrategy.PathfindingStrategy;
@@ -17,8 +16,7 @@ public class Controller
         this.model = model;
         this.view = view;
         this.view.setTriggers(this);
-        this.view.createGrid();
-        
+        this.view.createGrid();      
         this.model.addObserver(view);
     }
     

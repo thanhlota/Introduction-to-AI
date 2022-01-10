@@ -25,7 +25,7 @@ public class Tile extends Observable
         VISITED_LIGHT,
         VISITED_MEDIUM,
         VISITED_DENSE,
-       VISITED_MAX
+        VISITED_MAX
     }
 
     private final Map<Type, Color> typeMap;
@@ -44,9 +44,9 @@ public class Tile extends Observable
     private int weight;
     private Type type;
     private final double tileGap = 0;
-    private final int size;
-    
-    public Tile(int x, int y, int size)
+    private final int sizex;
+    private final int sizey;
+    public Tile(int x, int y, int sizex,int sizey)
     {
         pane = new StackPane();
         
@@ -78,16 +78,14 @@ public class Tile extends Observable
         
         this.weight = defaultWeight;
         this.type = Type.EMPTY;
-        this.size = size;
-        
-        this.rectangle = new Rectangle(size - tileGap, size - tileGap);
+        this.sizex = sizex;
+        this.sizey= sizey;
+        this.rectangle = new Rectangle(sizex - tileGap, sizey - tileGap);
         this.rectangle.setFill(Color.WHITE);
         this.setTileStroke(true);
-        
         pane.getChildren().add(rectangle);
-        pane.setTranslateX(x * size);
-        pane.setTranslateY(y * size);
-        
+        pane.setTranslateX(x * sizex);
+        pane.setTranslateY(y * sizey);    
         updateTooltip(null);
         setEvents();
     }
@@ -102,7 +100,7 @@ public class Tile extends Observable
         if(toAdd)
         {
             Text coords = new Text(String.format("%d,%d", this.x, this.y));
-            coords.setStyle(String.format("-fx-font: %d arial;", (size * 6) / 20));
+            coords.setStyle(String.format("-fx-font: %d arial;", (sizex * 6) / 20));
             Color color = (this.getType() == Tile.Type.WALL) ? Color.WHITE : Color.BLACK;
             coords.setFill(color);
             pane.getChildren().add(coords);
@@ -115,9 +113,8 @@ public class Tile extends Observable
     public void addText(String text)
     {
         this.toggleCoords(false);
-        
         Text txt = new Text(text);
-        txt.setStyle(String.format("-fx-font: %d arial;", (size * 6) / 20));
+        txt.setStyle(String.format("-fx-font: %d arial;", (sizex * 6) / 20));
         pane.getChildren().add(txt);
     }
     public void setAttributes(Type type, int weight)

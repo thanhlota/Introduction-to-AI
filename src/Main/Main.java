@@ -20,7 +20,6 @@ public class Main extends Application
     public void start(Stage primaryStage) throws Exception
     {
         View app = createApp();
-        
         primaryStage.setScene(app.getScene());
         primaryStage.setTitle(APP_TITLE);
         primaryStage.show();
@@ -30,8 +29,7 @@ public class Main extends Application
     {
         Grid model = new Grid();
         View view = new View(model);
-        Controller controller = new Controller(model, view);
-        
+        Controller controller = new Controller(model, view);    
         return view;
     }
     

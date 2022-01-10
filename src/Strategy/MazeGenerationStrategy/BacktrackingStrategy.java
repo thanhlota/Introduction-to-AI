@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 
@@ -25,8 +26,13 @@ public class BacktrackingStrategy extends MazeGenerationStrategy
         Stack<Tile> stack = new Stack<>();
         List<Tile> neighbors = new ArrayList<>();
         Set<Tile> visited = new HashSet<>();
-        Tile currentTile = grid[0][0];
-        
+        int k=model.getXSize();
+        int h=model.getYSize();
+        Random randx= new Random(); 
+        int randomX = randx.nextInt(k/2) *2;
+        Random randy= new Random(); 
+        int randomY = randy.nextInt(k/2) *2;
+        Tile currentTile = grid[randomX][randomY];     
         stack.push(currentTile);
         visited.add(currentTile);
         

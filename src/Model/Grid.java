@@ -32,22 +32,19 @@ public class Grid extends Observable implements Observer {
 		if (root == null || target == null)
 			return false;
 		this.painter.clearPath(this);
-
 		List<Tile> path = new ArrayList<>();
-
 		pathfindingStrategy.algorithm(this, path);
-
 		return true;
 	}
 
-	public void gridInit(int x_tiles, int y_tiles, int tile_size) {
+	public void gridInit(int x_tiles, int y_tiles, int tile_sizex,int tile_sizey) {
 		this.x_size = x_tiles;
 		this.y_size = y_tiles;
 		this.grid = new Tile[x_tiles][y_tiles];
 
 		for (int y = 0; y < y_tiles; y++) {
 			for (int x = 0; x < x_tiles; x++) {
-				Tile tile = new Tile(x, y, tile_size);
+				Tile tile = new Tile(x, y, tile_sizex,tile_sizey);
 				tile.addObserver(this);
 				grid[x][y] = tile;
 			}
@@ -203,6 +200,7 @@ public class Grid extends Observable implements Observer {
 		for (int y = 0; y < this.y_size; y++) {
 			for (int x = 0; x < this.x_size; x++) {
 				tile = grid[x][y];
+				tile.setTileStroke(true);
 				if (tile.getType() == Tile.Type.WALL)
 					tile.setAttributes(Tile.Type.EMPTY, tile.getWeight());
 

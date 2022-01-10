@@ -49,7 +49,6 @@ public final class Painter
         {
             if(tile != target && tile != root)
                 tile.setAttributes(type, tile.getWeight());
-           
             try
             {
                 Thread.sleep(sleep);

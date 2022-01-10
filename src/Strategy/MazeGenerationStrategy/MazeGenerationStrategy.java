@@ -17,12 +17,22 @@ public abstract class MazeGenerationStrategy
     public MazeGenerationStrategy() {
     
         this.painter = Painter.getInstance();
-        this.painterWait = 4;
+        this.painterWait = 200;
     }
     
     public final void generate(Grid model)
     {
+    	
         model.clearGrid();
+        int y_size=model.getYSize();
+    	int x_size=model.getXSize();
+    	Tile grid[][]=model.getGrid();
+    	for (int y = 0; y < y_size; y++) {
+			for (int x = 0; x < x_size; x++) {
+//				grid[x][y].clearTile();
+				grid[x][y].setTileStroke(false);
+			}
+		}
         this.setDefaultWalls(model.getGrid(), model.getXSize(), model.getYSize());
         this.algorithm(model);
     }
@@ -34,7 +44,6 @@ public abstract class MazeGenerationStrategy
     {
         neighbors.clear();
         Tile temp;
-        
         temp = model.getNorthTile(tile);
         if(temp != null)
             neighbors.add((temp.getY() % 2 != 0) ? model.getGrid()[temp.getX()][temp.getY() - 1] : temp);

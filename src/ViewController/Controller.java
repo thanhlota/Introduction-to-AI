@@ -1,5 +1,4 @@
 package ViewController;
-
 import Model.Grid;
 import Model.Tile;
 import Strategy.PathfindingStrategy.PathfindingStrategy;

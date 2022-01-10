@@ -24,16 +24,12 @@ public abstract class PathfindingStrategy
         long start = System.nanoTime();
         this.statistics = new PathfindingStatistics(model);
         this.statistics.setWallSize(model.getWallsAmount());
-        
         int cost = this.runPathfinder(model, path);
-
         long end = System.nanoTime();
         this.statistics.setElapsedTime(end - start);
         this.statistics.updateObservers();
-        this.painter.drawPath(path, model);
-        
+        this.painter.drawPath(path, model);        
         System.out.println(this.statistics);
-        
         return cost;
     }
     protected abstract int runPathfinder(Grid model, List<Tile> path);

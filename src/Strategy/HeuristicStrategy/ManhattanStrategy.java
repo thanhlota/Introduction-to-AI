@@ -14,8 +14,7 @@ public class ManhattanStrategy extends HeuristicStrategy
     {
         double D = 1.0;
         double dx = Math.abs(root.getX() - target.getX());
-        double dy = Math.abs(root.getY() - target.getY());
-        
+        double dy = Math.abs(root.getY() - target.getY()); 
         return D * (dx + dy);
     }
 }

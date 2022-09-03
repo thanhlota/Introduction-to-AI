@@ -17,7 +17,7 @@ public abstract class MazeGenerationStrategy
     public MazeGenerationStrategy() {
     
         this.painter = Painter.getInstance();
-        this.painterWait = 200;
+        this.painterWait = 1;
     }
     
     public final void generate(Grid model)

@@ -10,12 +10,10 @@ import javafx.stage.Stage;
 public class Main extends Application
 {
     private final String APP_TITLE = "NHẬP MÔN TRÍ TUỆ NHÂN TẠO";
-    
     public static void main(String[] args)
     {
         launch(args);
     }
-
     @Override
     public void start(Stage primaryStage) throws Exception
     {
@@ -23,8 +21,7 @@ public class Main extends Application
         primaryStage.setScene(app.getScene());
         primaryStage.setTitle(APP_TITLE);
         primaryStage.show();
-    }
-    
+    }   
     private View createApp()
     {
         Grid model = new Grid();
@@ -32,5 +29,4 @@ public class Main extends Application
         Controller controller = new Controller(model, view);    
         return view;
     }
-    
 }

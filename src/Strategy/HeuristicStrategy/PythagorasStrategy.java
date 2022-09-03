@@ -11,7 +11,6 @@ public class PythagorasStrategy extends HeuristicStrategy
     @Override
     public double computeHeuristic(Tile root, Tile target)
     {
-    	double D= 1.0;
-        return D * Math.sqrt((root.getX() - target.getX()) * (root.getX() - target.getX()) + (root.getY() - target.getY()) * (root.getY() - target.getY()));
+        return (root.getX() - target.getX()) * (root.getX() - target.getX()) + (root.getY() - target.getY()) * (root.getY() - target.getY());
     }
 }

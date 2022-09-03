@@ -31,8 +31,6 @@ public class AStarStrategy extends PathfindingStrategy
         Octile,
        
     }
-    
-    
     public AStarStrategy(boolean findOptimalSolution, HeuristicStrategy heuristic)
     {
         super();
